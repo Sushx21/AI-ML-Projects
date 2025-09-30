@@ -1,12 +1,9 @@
 research_task:
-  description: >
-    Find 3-5 interesting and recent facts about {topic} as of year 2025.
-  expected_output: >
-    A bullet list of 3-5 facts
+  description: "Research the topic provided by the user"
+  expected_output: "A detailed research summary about the topic"
+  agent: researcher
 
 blog_task:
-  description: >
-    Write a 100-word blog post summary about {topic} using the facts from the research.
-  expected_output: >
-    A blog post summary
-
+  description: "Write a blog post using the research findings"
+  expected_output: "A well-structured blog article written in markdown format"
+  agent: writer
