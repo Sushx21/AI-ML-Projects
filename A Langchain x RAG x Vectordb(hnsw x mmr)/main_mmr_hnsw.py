@@ -1,7 +1,7 @@
 import streamlit as st
-from rag import process_urls, generate_answer
+from ragmmr import process_urls, generate_answer
 
-st.title("SUSNATA'S Real estate Research Tool")
+st.title(" ⚡ SUSNATA'S Real estate Research Tool")
 
 
 
@@ -39,5 +39,3 @@ if query:
                 st.write(source)
     except RuntimeError as e:
         placeholder.text("You must process urls first")
-
-
