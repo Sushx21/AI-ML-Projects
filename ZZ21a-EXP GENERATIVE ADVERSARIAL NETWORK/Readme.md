@@ -22,7 +22,7 @@ Instead of hiding the result, this notebook intentionally includes:
 This repository is meant to serve as:
 - A **learning log** of foundational GAN behavior  
 - A reference for concepts like generator loss, discriminator loss, and adversarial dynamics  
-- A stepping stone for future experiments (e.g., CIFAR-10 GAN, DCGAN, WGAN-GP, etc.)  
+- A stepping stone for future experiments (e.g., CIFAR-10 GAN, DCGAN,etc.)  
 
 ### 🧪  Disclaimer
 This is **not** a production-ready GAN.
