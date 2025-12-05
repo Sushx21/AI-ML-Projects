@@ -28,7 +28,7 @@ def load_faq_csv(path: str) -> List[Document]:
     return docs
 
 
-docs = load_faq_csv("./lauki_qna.csv")
+docs = load_faq_csv("./susnata_qna.csv")
 emb = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2",
 )
