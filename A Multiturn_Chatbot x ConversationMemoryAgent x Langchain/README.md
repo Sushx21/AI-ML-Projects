@@ -118,3 +118,4 @@ This project demonstrates end-to-end AI engineering:
 - Real UI + real LLM  
 
 Built by one and only  developer — Susnata  Das
+please note in future i Plan to Deploy it in AMAZON BEDROCK AGENT CORE
