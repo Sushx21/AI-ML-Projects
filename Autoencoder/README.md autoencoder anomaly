@@ -1,60 +1,61 @@
-# 🧠 SUSNATA's Autoencoder-Based Credit Card Anomaly Detection  
-A reconstruction-error–based unsupervised model for identifying abnormal credit card transactions using PCA-transformed features.
+# 🧠  
+susnata's autoencoder-based  
+credit card anomaly detection
+
+a reconstruction-error unsupervised model for identifying abnormal credit card transactions using pca-transformed features.
 
 ---
 
-## 📌 Overview  
-This project implements an **unsupervised deep learning anomaly detection system** using an autoencoder trained only on normal transactions.  
-Fraudulent or unusual transactions are detected by measuring **reconstruction error**, where high error indicates deviation from learned normal patterns.
+## 📌  
+overview  
+this project implements an **unsupervised deep learning anomaly detection system** using an autoencoder trained only on normal transactions.  
+fraudulent or unusual transactions are detected by measuring **reconstruction error**, where high error indicates deviation from learned normal patterns.
 
 ---
 
-## 📂 Dataset  
-- PCA-transformed credit card dataset  
-- Normalized (mean = 0, variance = 1)  
-- Columns dropped: `Time`, `Amount`, `Class` (labels used only for evaluation)
+## 📂  
+dataset  
+- pca-transformed credit card dataset  
+- normalized values  
+- features → 28 components  
+- labels used only for evaluation  
 
----
-
-## ⚙️ Preprocessing  
 ```python
 X = df.drop(["Class","Time","Amount"], axis=1).values
 y = df["Class"].values
 ```
 
-- Training/test split with stratification  
-- Only **Class = 0** samples used to train the autoencoder  
+---
 
+## ⚙️  
+preprocessing  
 ```python
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
 X_train_normal = X_train[y_train == 0]
 ```
 
 ---
 
-## 🏗️ Model Architecture  
-A simple symmetric autoencoder:
-
+## 🏗️  
+model architecture  
 ```python
 encoder:
-  Input (28)
-  Dense(14, relu)
-  Dense(7, relu)
-
+  input  → dense 14 relu → dense 7 relu
 decoder:
-  Dense(14, relu)
-  Dense(28, sigmoid)
+  dense 14 relu → dense 28 sigmoid
 ```
 
-Complete build:
-
 ```python
-autoencoder = Model(inputs, decoder(encoder(inputs)))
 autoencoder.compile(optimizer="adam", loss="mse")
 ```
 
 ---
 
-## 🏋️ Training  
+## 🏋️  
+training  
 ```python
 history = autoencoder.fit(
     X_train_normal,
@@ -68,81 +69,63 @@ history = autoencoder.fit(
 
 ---
 
-## 📉 Reconstruction Error  
-Training MSE:
-
+## 📉  
+reconstruction error  
 ```python
 train_mse = np.mean((X_train_normal - recon_train)**2, axis=1)
-```
-
-Testing MSE:
-
-```python
-test_mse = np.mean((X_test - recon_test)**2, axis=1)
+test_mse  = np.mean((X_test - recon_test)**2, axis=1)
 ```
 
 ---
 
-## 🎚️ Threshold Selection  
-We use the **95th percentile** of normal training errors:
-
+## 🎚️  
+threshold (95th percentile)  
 ```python
 threshold = np.percentile(train_mse, 95)
 ```
 
-Transactions with MSE > threshold → **Anomaly**
-
 ---
 
-## 🚨 Anomaly Detection  
+## 🚨  
+detect anomalies  
 ```python
 anomalies = test_mse > threshold
 ```
 
 ---
 
-## 📊 Evaluation  
-Confusion matrix and classification report:
-
+## 📊  
+evaluation  
 ```python
-cm = confusion_matrix(y_test, anomalies)
-print(cm)
+print(confusion_matrix(y_test, anomalies))
 print(classification_report(y_test, anomalies))
 ```
 
-**Performance highlight:**  
-- High recall for fraud transactions  
-- Suitable for rare-event detection scenarios  
-
 ---
 
-## 💾 Saving the Model  
+## 💾  
+saving model  
 ```python
 autoencoder.save("/content/drive/MyDrive/final_autoencoder_model.h5")
 ```
 
 ---
 
-## 📤 Exporting Detected Anomalies  
-```python
-anomalies_df.to_csv("/content/drive/MyDrive/detected_anomalies.csv", index=False)
-```
-
----
-
-## 🧪 Inference Example  
+## 🧪  
+inference  
 ```python
 new_data = np.random.randn(5, 28)
 recon = autoencoder.predict(new_data)
+
 mse = np.mean((new_data - recon)**2, axis=1)
-anomalies = mse > threshold
-print(anomalies)
+print(mse > threshold)
 ```
 
 ---
 
-## ✅ Summary  
-- Unsupervised autoencoder  
-- Learns normal behavior only  
-- Detects anomalies via reconstruction error  
-- Effective for fraud detection, intrusion detection, and other rare anomaly tasks
+## ✅  
+summary  
+- unsupervised autoencoder model  
+- reconstruction-error anomaly detection  
+- trained only on normal transactions  
+- high recall, effective for rare fraud detection
