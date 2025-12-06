@@ -1,78 +1,60 @@
-# 🧠🚨SUSNATA's Autoencoder-based anomaly detection for credit card transactions  
-**unsupervised reconstruction-error model for detecting abnormal spending patterns**
-
-this project applies a deep autoencoder trained **only on normal transactions** to identify anomalies based on reconstruction error.  
-since the data is already **pca-transformed and scaled**, the autoencoder focuses purely on **pattern learning**.
+# 🧠 SUSNATA's Autoencoder-Based Credit Card Anomaly Detection  
+A reconstruction-error–based unsupervised model for identifying abnormal credit card transactions using PCA-transformed features.
 
 ---
 
-## 📂 **1. dataset loading**
-```python
-import pandas as pd
-import numpy as np
-
-path = "/content/drive/MyDrive/creditcardAutoencoder.csv"
-df = pd.read_csv(path)
-df.head()
-```
+## 📌 Overview  
+This project implements an **unsupervised deep learning anomaly detection system** using an autoencoder trained only on normal transactions.  
+Fraudulent or unusual transactions are detected by measuring **reconstruction error**, where high error indicates deviation from learned normal patterns.
 
 ---
 
-## 🧹 **2. preprocessing**
+## 📂 Dataset  
+- PCA-transformed credit card dataset  
+- Normalized (mean = 0, variance = 1)  
+- Columns dropped: `Time`, `Amount`, `Class` (labels used only for evaluation)
 
-### 🔧 dropping unused columns  
+---
+
+## ⚙️ Preprocessing  
 ```python
 X = df.drop(["Class","Time","Amount"], axis=1).values
 y = df["Class"].values
 ```
 
-### 🔄 train–test split  
-```python
-from sklearn.model_selection import train_test_split
+- Training/test split with stratification  
+- Only **Class = 0** samples used to train the autoencoder  
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
-```
-
-### 🟢 using only normal data for training  
 ```python
 X_train_normal = X_train[y_train == 0]
 ```
 
 ---
 
-## 🏗️ **3. autoencoder architecture**
+## 🏗️ Model Architecture  
+A simple symmetric autoencoder:
+
 ```python
-from tensorflow.keras import layers, models
+encoder:
+  Input (28)
+  Dense(14, relu)
+  Dense(7, relu)
 
-input_dim = X_train.shape[1]
-encoding_dim = 14
-bottleneck = 7
+decoder:
+  Dense(14, relu)
+  Dense(28, sigmoid)
+```
 
-encoder = models.Sequential([
-    layers.Input(shape=(input_dim,)),
-    layers.Dense(encoding_dim, activation="relu"),
-    layers.Dense(bottleneck, activation="relu")
-])
+Complete build:
 
-decoder = models.Sequential([
-    layers.Dense(encoding_dim, activation="relu"),
-    layers.Dense(input_dim, activation="sigmoid")
-])
-
-inputs = layers.Input(shape=(input_dim,))
-encoded = encoder(inputs)
-decoded = decoder(encoded)
-
-autoencoder = models.Model(inputs, decoded)
+```python
+autoencoder = Model(inputs, decoder(encoder(inputs)))
 autoencoder.compile(optimizer="adam", loss="mse")
-autoencoder.summary()
 ```
 
 ---
 
-## 🏋️ **4. training the model**
+## 🏋️ Training  
 ```python
 history = autoencoder.fit(
     X_train_normal,
@@ -86,98 +68,81 @@ history = autoencoder.fit(
 
 ---
 
-## 📉 **5. reconstruction error computation**
+## 📉 Reconstruction Error  
+Training MSE:
 
-### training mse  
 ```python
-recon_train = autoencoder.predict(X_train_normal)
 train_mse = np.mean((X_train_normal - recon_train)**2, axis=1)
 ```
 
-### test mse  
+Testing MSE:
+
 ```python
-recon_test = autoencoder.predict(X_test)
 test_mse = np.mean((X_test - recon_test)**2, axis=1)
 ```
 
 ---
 
-## 🎚️ **6. anomaly threshold selection**
-we use the **95th percentile** of training mse as the anomaly cutoff.
+## 🎚️ Threshold Selection  
+We use the **95th percentile** of normal training errors:
 
 ```python
-threshold_95 = np.percentile(train_mse, 95)
-print(threshold_95)
+threshold = np.percentile(train_mse, 95)
+```
+
+Transactions with MSE > threshold → **Anomaly**
+
+---
+
+## 🚨 Anomaly Detection  
+```python
+anomalies = test_mse > threshold
 ```
 
 ---
 
-## 🚨 **7. anomaly detection**
-```python
-anomalies = test_mse > threshold_95
-print(anomalies.sum())
-```
-
----
-
-## 📊 **8. evaluation using true labels**
-even though the model is unsupervised, we compare performance with actual fraud labels.
+## 📊 Evaluation  
+Confusion matrix and classification report:
 
 ```python
-from sklearn.metrics import confusion_matrix, classification_report
-
 cm = confusion_matrix(y_test, anomalies)
 print(cm)
-
-print(classification_report(y_test, anomalies, digits=4))
+print(classification_report(y_test, anomalies))
 ```
 
-**✨ highlight:**  
-- high recall on fraud class  
-- reconstruction-error models are ideal when fraud patterns are rare and unpredictable  
+**Performance highlight:**  
+- High recall for fraud transactions  
+- Suitable for rare-event detection scenarios  
 
 ---
 
-## 💾 **9. saving the trained model**
+## 💾 Saving the Model  
 ```python
 autoencoder.save("/content/drive/MyDrive/final_autoencoder_model.h5")
 ```
 
 ---
 
-## 📤 **10. exporting detected anomalies**
+## 📤 Exporting Detected Anomalies  
 ```python
-anomalies_df = pd.DataFrame(
-    X_test[anomalies],
-    columns=df.drop(["Class","Time","Amount"], axis=1).columns
-)
-
-anomalies_df["True_Class"] = y_test[anomalies]
 anomalies_df.to_csv("/content/drive/MyDrive/detected_anomalies.csv", index=False)
 ```
 
 ---
 
-## 🧪 **11. inference example**
+## 🧪 Inference Example  
 ```python
-from tensorflow.keras.models import load_model
-import numpy as np
-
-autoencoder = load_model("/content/drive/MyDrive/final_autoencoder_model.h5", compile=False)
-
 new_data = np.random.randn(5, 28)
 recon = autoencoder.predict(new_data)
-
 mse = np.mean((new_data - recon)**2, axis=1)
-anomalies = mse > threshold_95
+anomalies = mse > threshold
 print(anomalies)
 ```
 
 ---
 
-# ⭐ summary  
-- completely **unsupervised autoencoder**  
-- learns **normal credit card transaction signals**  
-- fraud appears as **high reconstruction error**  
-- simple and effective for **rare anomaly detection**  
-- easy to deploy and extend
+## ✅ Summary  
+- Unsupervised autoencoder  
+- Learns normal behavior only  
+- Detects anomalies via reconstruction error  
+- Effective for fraud detection, intrusion detection, and other rare anomaly tasks
