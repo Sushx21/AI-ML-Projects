@@ -1,0 +1,166 @@
+{
+    "EMP001": {
+        "name": "Aarav Sen",
+        "cht": 5.2,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP002": {
+        "name": "Priya Mehta",
+        "cht": 5.5,
+        "leaves": {
+            "balance": 19,
+            "history": [
+                "2025-11-21"
+            ]
+        }
+    },
+    "EMP003": {
+        "name": "Rohan Das",
+        "cht": 6.1,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP004": {
+        "name": "Ishita Roy",
+        "cht": 5.8,
+        "leaves": {
+            "balance": 19,
+            "history": [
+                "2025-11-21"
+            ]
+        }
+    },
+    "EMP005": {
+        "name": "Kabir Khanna",
+        "cht": 6.7,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP006": {
+        "name": "Neha Kapoor",
+        "cht": 5.9,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP007": {
+        "name": "Arjun Patel",
+        "cht": 6.3,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP008": {
+        "name": "Meera Sinha",
+        "cht": 6.0,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP009": {
+        "name": "Dev Sharma",
+        "cht": 5.6,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP010": {
+        "name": "Riya Nair",
+        "cht": 6.4,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP011": {
+        "name": "Aditya Ghosh",
+        "cht": 6.2,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP012": {
+        "name": "Sanjana Iyer",
+        "cht": 5.7,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP013": {
+        "name": "Vikram Bhat",
+        "cht": 6.5,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP014": {
+        "name": "Tanya Malhotra",
+        "cht": 5.3,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP015": {
+        "name": "Karan Joshi",
+        "cht": 6.6,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP016": {
+        "name": "Nisha Chatterjee",
+        "cht": 5.4,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP017": {
+        "name": "Rahul Banerjee",
+        "cht": 6.8,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP018": {
+        "name": "Aanya Desai",
+        "cht": 5.1,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP019": {
+        "name": "Siddharth Rao",
+        "cht": 6.9,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    },
+    "EMP020": {
+        "name": "Diya Mukherjee",
+        "cht": 5.0,
+        "leaves": {
+            "balance": 20,
+            "history": []
+        }
+    }
+}
