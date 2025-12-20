@@ -6,4 +6,8 @@ __pycache__/
 .venv/
 *.pyc
 *.pkl
+<<<<<<< HEAD
 .env
+=======
+.env
+>>>>>>> de49719d4c07a9d5d7269289e2badc6996c00924

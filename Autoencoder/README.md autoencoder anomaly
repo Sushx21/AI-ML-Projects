@@ -1,0 +1,131 @@
+# 🧠  
+susnata's autoencoder-based  
+credit card anomaly detection
+
+a reconstruction-error unsupervised model for identifying abnormal credit card transactions using pca-transformed features.
+
+---
+
+## 📌  
+overview  
+this project implements an **unsupervised deep learning anomaly detection system** using an autoencoder trained only on normal transactions.  
+fraudulent or unusual transactions are detected by measuring **reconstruction error**, where high error indicates deviation from learned normal patterns.
+
+---
+
+## 📂  
+dataset  
+- pca-transformed credit card dataset  
+- normalized values  
+- features → 28 components  
+- labels used only for evaluation  
+
+```python
+X = df.drop(["Class","Time","Amount"], axis=1).values
+y = df["Class"].values
+```
+
+---
+
+## ⚙️  
+preprocessing  
+```python
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+X_train_normal = X_train[y_train == 0]
+```
+
+---
+
+## 🏗️  
+model architecture  
+```python
+encoder:
+  input  → dense 14 relu → dense 7 relu
+decoder:
+  dense 14 relu → dense 28 sigmoid
+```
+
+```python
+autoencoder.compile(optimizer="adam", loss="mse")
+```
+
+---
+
+## 🏋️  
+training  
+```python
+history = autoencoder.fit(
+    X_train_normal,
+    X_train_normal,
+    epochs=20,
+    batch_size=256,
+    validation_split=0.2,
+    shuffle=True
+)
+```
+
+---
+
+## 📉  
+reconstruction error  
+```python
+train_mse = np.mean((X_train_normal - recon_train)**2, axis=1)
+test_mse  = np.mean((X_test - recon_test)**2, axis=1)
+```
+
+---
+
+## 🎚️  
+threshold (95th percentile)  
+```python
+threshold = np.percentile(train_mse, 95)
+```
+
+---
+
+## 🚨  
+detect anomalies  
+```python
+anomalies = test_mse > threshold
+```
+
+---
+
+## 📊  
+evaluation  
+```python
+print(confusion_matrix(y_test, anomalies))
+print(classification_report(y_test, anomalies))
+```
+
+---
+
+## 💾  
+saving model  
+```python
+autoencoder.save("/content/drive/MyDrive/final_autoencoder_model.h5")
+```
+
+---
+
+## 🧪  
+inference  
+```python
+new_data = np.random.randn(5, 28)
+recon = autoencoder.predict(new_data)
+
+mse = np.mean((new_data - recon)**2, axis=1)
+print(mse > threshold)
+```
+
+---
+
+## ✅  
+summary  
+- unsupervised autoencoder model  
+- reconstruction-error anomaly detection  
+- trained only on normal transactions  
+- high recall, effective for rare fraud detection
