@@ -1,4 +1,4 @@
-**# 🏡 SUSNATA'S Real Estate Research Tool  
+**# 🏛️ SUSNATA'S Real Estate Research Tool  
 ### A Fast, Accurate RAG System with HNSW + MMR Retrieval  
 Powered by **LangChain**, **Groq Llama 3.3**, and **ChromaDB**  
 Built by Susnata 🐺
@@ -7,7 +7,7 @@ Built by Susnata 🐺
 
 ## 📌 Overview
 
-This project is a **Real Estate Research & Analysis Tool** that uses a **Retrieval-Augmented Generation (RAG)** pipeline to extract information from financial and real-estate websites.
+This project is a **Real Estate Research & Analysis Tool** that uses a **Retrieval-Augmented Generation (RAG)** 🏛️pipeline to extract information from financial and real-estate websites.
 
 It features:
 
