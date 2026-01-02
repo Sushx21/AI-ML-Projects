@@ -1,4 +1,4 @@
-# 📘 Steel Production Forecasting using LSTM 🐺
+# ⛓️🔩 Steel Production Forecasting using LSTM 🐺
 
 ## Overview
 This project explores **time-series forecasting of steel (industrial) production** using Long Short-Term Memory (LSTM) networks.  
@@ -100,8 +100,9 @@ That said, ARIMA/SARIMA remain valuable:
 ## Limitations
 - Univariate modeling (no exogenous economic indicators)  
 - Structural shocks cannot be anticipated  
-- Differenced models are best suited for short forecast horizons  
-
+- Differenced models are best suited for short forecast horizons
+- Error accumulation (recursive forecasting problem)
+Let's say when  LSTM is used recursively, its own predictions are fed back as inputs, so small early errors compound and the forecast can drift or flatten. 
 ---
 
 ## Conclusion
