@@ -22,6 +22,11 @@ The primary goal is to support **maintenance decision-making**, not raw predicti
 **Explicitly NOT optimized for:**
 - Accuracy (misleading under imbalance)
 
+
+
+**Precision, recall, and F1 were not emphasized because the decision threshold is business-defined and cost-sensitive. Instead, MCC, Brier score, cost curves, and calibration were prioritized, please note
+
+
 ---
 
 ## 🏌️‍♂️ Dataset
