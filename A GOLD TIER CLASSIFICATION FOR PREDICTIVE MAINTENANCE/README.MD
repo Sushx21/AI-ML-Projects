@@ -39,7 +39,7 @@ This project mirrors **credit risk modeling practices**:
 
 | Concept | Purpose |
 |------|--------|
-| MCC | Robust decision evaluation under imbalance |
+| MCC(matthews correlation coefficient) | Robust decision evaluation under imbalance |
 | Brier Score | Probability quality |
 | Calibration | Control overconfidence |
 | Ranking metrics | Maintenance prioritization |
