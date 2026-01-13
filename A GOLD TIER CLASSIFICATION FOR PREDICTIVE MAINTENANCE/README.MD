@@ -155,6 +155,6 @@ This project delivers a **production-ready predictive maintenance decision syste
 
 ---
 
-## 👤 Author
+## 🐺 Author
 **Susnata**  
 Applied ML | Risk Modeling | Industrial AI
