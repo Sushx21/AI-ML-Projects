@@ -22,6 +22,11 @@ The primary goal is to support **maintenance decision-making**, not raw predicti
 **Explicitly NOT optimized for:**
 - Accuracy (misleading under imbalance)
 
+
+
+**Precision, recall, and F1 were not emphasized because the decision threshold is business-defined and cost-sensitive. Instead, MCC, Brier score, cost curves, and calibration were prioritized, please note
+
+
 ---
 
 ## 🏌️‍♂️ Dataset
@@ -39,7 +44,7 @@ This project mirrors **credit risk modeling practices**:
 
 | Concept | Purpose |
 |------|--------|
-| MCC(matthews correlation coefficient) | Robust decision evaluation under imbalance |
+| MCC(matthews correlation coefficient)respected all 4 tp fp tn fn very well suited for imbalanced dataset | Robust decision evaluation under imbalance |
 | Brier Score | Probability quality |
 | Calibration | Control overconfidence |
 | Ranking metrics | Maintenance prioritization |
@@ -168,7 +173,11 @@ This project delivers a **production-ready predictive maintenance decision syste
 
 ---
 
+<<<<<<< HEAD
 
 ## 👤 Author
+=======
+## 🐺 Author
+>>>>>>> 2ddb8268b7b687ed0c94d84a535fd33b51dda12c
 **Susnata**  
 Applied ML | Risk Modeling | Industrial AI
