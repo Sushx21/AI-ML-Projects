@@ -149,11 +149,25 @@ The CSV includes:
 - Binary intervention decision
 
 ---
+## 🧮 Conformal Prediction (Uncertainty Quantification)
+
+### 📐 Why Conformal Prediction?
+Point probabilities alone are insufficient in high-stakes industrial settings. Maintenance decisions benefit from knowing **how uncertain** a prediction is.
+
+To address this, **conformal prediction** was applied on top of **calibrated XGBoost probabilities** to produce **distribution-free uncertainty intervals**.
+
+This enables statements such as:
+> “With 90% confidence, the true failure risk lies within this interval.”
+
+
+
+
 
 ## 🏁 Conclusion
 This project delivers a **production-ready predictive maintenance decision system**, validated for probability honesty, stability, cost sensitivity, and ranking reliability. The approach bridges machine learning with real industrial decision-making and is suitable for deployment in high-stakes manufacturing environments.
 
 ---
+
 
 ## 👤 Author
 **Susnata**  
