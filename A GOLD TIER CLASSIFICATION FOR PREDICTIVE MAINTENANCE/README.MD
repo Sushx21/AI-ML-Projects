@@ -172,12 +172,6 @@ This enables statements such as:
 This project delivers a **production-ready predictive maintenance decision system**, validated for probability honesty, stability, cost sensitivity, and ranking reliability. The approach bridges machine learning with real industrial decision-making and is suitable for deployment in high-stakes manufacturing environments.
 
 ---
+## 🐺 Susnata
 
-<<<<<<< HEAD
-
-## 👤 Author
-=======
-## 🐺 Author
->>>>>>> 2ddb8268b7b687ed0c94d84a535fd33b51dda12c
-**Susnata**  
 Applied ML | Risk Modeling | Industrial AI
