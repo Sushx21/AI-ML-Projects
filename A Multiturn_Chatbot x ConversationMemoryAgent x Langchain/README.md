@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 # 🐺 Customer Service Conversational Agent with Memory
 =======
 # 🐺 Customer Service Conversational Agent with Memory x Agentic Rag
->>>>>>> de49719d4c07a9d5d7269289e2badc6996c00924
+
 A multi-turn AI assistant for telecom customer support, built using LangChain, Groq LLMs, and a custom memory system.
 
 ---
