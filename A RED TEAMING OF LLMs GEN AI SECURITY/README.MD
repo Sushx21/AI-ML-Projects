@@ -16,8 +16,8 @@ The objective of this project is to:
 * Identify **prompt-injection, role hijacking, and context leakage vulnerabilities**
 * Compare **small vs large model robustness**
 * Demonstrate **manual + automated red teaming at scale**
-
-Recruiter translation: *"Can this person break our GenAI app before users do?"* → **Yes.**
+ 
+* My motivation Can I  break our GenAI app before users do?"* → **Yes.**
 
 ---
 
