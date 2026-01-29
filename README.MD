@@ -1,1 +1,1 @@
-AI IS COOL I GUESS🦦
+AI IS COOL I GUESS. 🦦
