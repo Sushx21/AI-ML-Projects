@@ -231,7 +231,7 @@ No misuse or malicious deployment is intended.
 
 ---
 
-## 🐺 Final Sigma Note
+## 🐺 Final  Note
 
 Anyone can *build* a chatbot.
 
