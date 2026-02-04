@@ -1,57 +1,45 @@
+# PCA Loadings Back-Mapping  
+**From Principal Components back to Original Features**
 
-# Susnata PCA Loadings Back-Mapping: From Components to Original Features
-
-## 📌 Motivation (Why this exists)
-
-Principal Component Analysis (PCA) is excellent for dimensionality reduction,  
-but it introduces a critical limitation:
-
-> Models trained on principal components lose direct interpretability in the original feature space.
-
-This repository demonstrates how to **back-map PCA loadings and regression coefficients**
-to recover **original-feature-level interpretability** — mathematically, cleanly, and explicitly.
-
-This is not a PCA tutorial.  
-This is **PCA done with intent**.
+No approximation.  
+No heuristics.  
+Pure linear algebra.
 
 ---
 
 ## 🧠 Notation & Mental Model
 
 <p align="center">
-  <img src="pca_loadings_backmapping/pca_notation_and_mental_map.jpg" width="600">
+  <img src="pca_loadings_backmapping/pca_notation_and_mental_map.jpg.jpg" width="650">
 </p>
 
-**Definitions used throughout:**
+Let:
 
-- **X** → Original feature matrix  
-  *(temperature, pressure, oxygen, coal rate, etc.)*
+- **X** = Original feature matrix  
+  (e.g., temperature, pressure, oxygen, coal rate)
 
-- **W** → PCA loading matrix  
-  *(weights defining how original features combine into principal components)*
+- **W** = PCA loading matrix  
+  (weights defining how original features form principal components)
 
-- **Z** → Principal component matrix  
+- **Z** = Principal component matrix
 
-\[
-Z = XW
-\]
+- **βₚ𝚌ₐ** = Regression coefficients learned on principal components
 
-- **βₚ𝚌ₐ** → Regression coefficients learned on principal components  
+- **βₒᵣᵢgᵢₙₐₗ** = Coefficients expressed in original feature space
 
-- **βₒᵣᵢgᵢₙₐₗ** → Regression coefficients expressed in the original feature space  
-
-Each principal component is a **weighted linear combination of original features**.  
-Nothing mystical. Just linear algebra.
+Each principal component is simply a **weighted sum of original features**.  
+Nothing mystical—just linear algebra.
 
 ---
 
-## 🔁 Step 1: PCA Projection (Feature Space → PC Space)
+## 🔁 Step 1: PCA Projection  
+**(Feature Space → PC Space)**
 
 <p align="center">
-  <img src="pca_loadings_backmapping/pca_projection_and_pc_regression.jpg" width="600">
+  <img src="pca_loadings_backmapping/pca_projection_and_pc_regression.jpg.jpg" width="650">
 </p>
 
-PCA performs a linear transformation:
+PCA applies a linear transformation:
 
 \[
 Z = XW
@@ -59,42 +47,38 @@ Z = XW
 
 This means:
 - Original features are projected onto orthogonal directions
-- Each principal component captures variance as a weighted combination of features
+- Each PC captures variance as a weighted combination of features
 
 At this stage:
-- Interpretability is reduced
-- But the underlying structure and signal are preserved
+- Interpretability is reduced  
+- But **structure and signal are preserved**
 
 ---
 
 ## 📐 Step 2: Regression on Principal Components
 
-We train a linear model **on the principal components**, not on the original features:
+We train a linear model **on the PCs**, not directly on original features:
 
 \[
 y = Z \beta_{\text{PCA}} + \varepsilon
 \]
 
-This is often done to:
+This is done to:
 - Reduce multicollinearity
-- Stabilize coefficient estimates
-- Improve numerical conditioning
+- Improve numerical stability
+- Work in a compressed, decorrelated space
 
-However…
-
-👉 These coefficients are **not interpretable in original feature units**.
-
-So we back-map them.
+However, coefficients are now expressed in **PC space**, not feature space.
 
 ---
 
 ## 🔄 Step 3: Back-Mapping PCA Loadings
 
 <p align="center">
-  <img src="pca_loadings_backmapping/pca_backmapping_derivation.jpg" width="600">
+  <img src="pca_loadings_backmapping/pca_backmapping_derivation.jpg.jpg" width="650">
 </p>
 
-Substituting the PCA projection into the regression equation:
+Substitute the PCA projection into the regression equation:
 
 \[
 Z = XW
@@ -110,65 +94,57 @@ Rearranging:
 y = X (W \beta_{\text{PCA}}) + \varepsilon
 \]
 
-This gives the key result:
+This yields the key result:
 
 \[
 \beta_{\text{original}} = W \beta_{\text{PCA}}
 \]
 
-This is the **back-mapping of PCA loadings**.
+This is **PCA loadings back-mapping**.
 
-No approximation.  
-No heuristic.  
-Pure linear algebra.
+No assumptions added.  
+No approximation introduced.
 
 ---
 
-## 🔬 Step 4: Feature-Level Interpretation
+## 🔍 Step 4: Feature-Level Interpretation
 
 <p align="center">
-  <img src="pca_loadings_backmapping/feature_level_backmapped_coefficients.jpg" width="600">
+  <img src="pca_loadings_backmapping/feature_level_backmapped_coefficients.jpg.jpg" width="650">
 </p>
 
-For a specific original feature **j**:
+For a specific original feature *j*:
 
 \[
 \beta_{\text{original}}^{(j)} =
 \sum_{k=1}^{K} W_{j,k} \cdot \beta_{\text{PCA}}^{(k)}
 \]
 
-This shows that:
+This shows:
 
 - Each original feature’s influence is an **aggregation of its contributions across PCs**
-- PCA does not destroy interpretability — **it delays it**
-- Back-mapping restores decision-ready coefficients in the original feature space
+- PCA does **not destroy interpretability — it delays it**
+- Back-mapping restores **decision-ready coefficients** in the original feature space
+
+---
+
+## 🔐 Variance Retention & Information Preservation
+
+Although PCA expresses features as linear combinations, the selected principal components retain **~98% of the total variance**.
+
+This implies:
+
+- Very little information is discarded
+- The dominant structure of the data is preserved
+- Back-mapped coefficients remain **reliable and meaningful**
+
+In this context, PCA acts as a **rotation and compression**, not a destructive transformation.
 
 ---
 
 ## 🎯 Why This Matters (Business + ML)
 
-- Enables explanation of PCA-based models to non-technical stakeholders
-- Allows ranking of original features even after dimensionality reduction
-- Makes PCA compatible with interpretability tools (e.g., SHAP)
-- Avoids the “black-box PCA” trap
-
-This is **interpretability-first modeling**, not just compression.
-
----
-
-## 🐺 Takeaway
-
-Most workflows stop at:
-
-\[
-Z = XW
-\]
-
-This work goes further:
-
-\[
-\beta_{\text{original}} = W \beta_{\text{PCA}}
-\]
-
-Dimensionality reduction is easy.  
-**Reconstruction of meaning is mastery.**
+- Enables explanation of PCA-based models to non-technical stakeholders  
+- Allows ranking of original features after dimensionality reduction  
+- Makes PCA compatible with interpretability tools (e.g., SHAP)  
+- Avoids the “black-box PCA” trap  
