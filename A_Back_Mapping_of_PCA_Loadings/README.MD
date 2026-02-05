@@ -148,3 +148,7 @@ In this context, PCA acts as a **rotation and compression**, not a destructive t
 - Allows ranking of original features after dimensionality reduction  
 - Makes PCA compatible with interpretability tools (e.g., SHAP)  
 - Avoids the “black-box PCA” trap  
+
+📌 Notes on Scaling, PCA, and Regularization
+All features were standardized before PCA, so regression coefficients and SHAP values are expressed in scaled units, ensuring fair comparison across variables with different physical ranges.
+PCA introduces an implicit Ridge-like effect by projecting correlated features into orthogonal components, stabilizing coefficient estimation under multicollinearity without explicitly applying Ridge regression.
