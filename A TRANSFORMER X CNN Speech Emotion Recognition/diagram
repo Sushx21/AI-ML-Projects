@@ -1,0 +1,13 @@
+MFCC (40×200×1)
+        ↓ CNN
+(10×50×32)
+        ↓ Reshape
+500 patches × 32 features
+        ↓ Positional Embedding
+(batch, 500, 32)
+        ↓ Transformer Block
+(batch, 500, 32)
+        ↓ Global Avg Pool
+(batch, 32)
+        ↓ Dense → Softmax
+Emotion Prediction

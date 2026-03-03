@@ -1,0 +1,9 @@
+research_task:
+  description: "Research the topic provided by the user"
+  expected_output: "A detailed research summary about the topic"
+  agent: researcher
+
+blog_task:
+  description: "Write a blog post using the research findings"
+  expected_output: "A well-structured blog article written in markdown format"
+  agent: writer
