@@ -37,7 +37,7 @@ The implementation includes:
 - Loss Function: CrossEntropyLoss
 - Epochs: 5
 - Dataset: MNIST
-- Device: GPU (if available)
+- Device: GPU T4
 
 ---
 
